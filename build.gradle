@@ -1,0 +1,52 @@
+buildscript {	
+		ext {
+springBootVersion = '2.0.5.RELEASE'
+}
+repositories {
+mavenCentral()
+}
+dependencies {
+classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+}
+
+	}	
+		
+	apply plugin: 'java'	
+	apply plugin: 'eclipse'	
+	apply plugin: 'org.springframework.boot'	
+	apply plugin: 'io.spring.dependency-management'	
+		
+	dependencyManagement {	
+	    imports {	
+	        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES	
+	    }	
+	    applyMavenExclusions = false	
+	}	
+		
+	version = '0.0.1-OJT'	
+	sourceCompatibility = JavaVersion.VERSION_1_8	
+	targetCompatibility = JavaVersion.VERSION_1_8	
+		
+	repositories {	
+		mavenCentral()
+		mavenLocal()
+	}	
+		
+	dependencies {	
+		compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+		compile('org.springframework.boot:spring-boot-starter-web')
+		testCompile('org.springframework.boot:spring-boot-starter-test')	
+		
+		compile('org.springframework.boot:spring-boot-starter-jdbc')		
+		//database framework mybatis
+		compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1")
+		//oracle db connect -->jdbc
+		compile files('lib/ojdbc7-12.1.0.jar');
+	}	
+		
+	tasks.withType(FindBugs) {	
+	    reports {	
+	        xml.enabled false	
+	        html.enabled true	
+	    }	
+	}
